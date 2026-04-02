@@ -101,17 +101,27 @@
             justify-content: center;
             padding-top: 100px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            pointer-events: auto;
         }
 
         .breathing-orb-container {
-            position: absolute;
+            position: fixed;
             width: 400px;
             height: 400px;
             z-index: 0;
             opacity: 0.7;
             pointer-events: none;
             transition: none;
+            left: 50%;
+            top: 50vh;
+            transform: translate(-50%, -50%);
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            overflow: visible;
+            display: block;
         }
 
         .breathing-orb-container:hover {
@@ -123,11 +133,18 @@
             height: 100%;
             filter: blur(50px);
             overflow: visible;
+            display: block;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            stroke: none;
         }
 
         .orb-circle {
             animation: breathe 6s ease-in-out infinite;
             transform-origin: 300px 300px;
+            stroke: none;
         }
 
         @keyframes breathe {
@@ -495,7 +512,7 @@
         
         <!-- Breathing Orb -->
         <div class="breathing-orb-container">
-            <svg class="breathing-orb" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <svg class="breathing-orb" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="400" height="400" preserveAspectRatio="xMidYMid meet" style="background: transparent; border: none; fill: transparent; stroke: none;">
                 <circle class="orb-circle orb-circle-1" cx="200" cy="200" r="120"></circle>
                 <circle class="orb-circle orb-circle-2" cx="200" cy="200" r="120"></circle>
                 <circle class="orb-circle orb-circle-3" cx="200" cy="200" r="120"></circle>
@@ -523,12 +540,12 @@
                         <div class="pain-num">1</div>
                         <h3 class="pain-title editable" data-field="pain1Title">The Exhaustion of Performance</h3>
                     </div>
-                    <p class="pain-desc editable" data-field="pain1Desc">You have optimized every hour of your day, yet the internal landscape remains cluttered and demanding. Survival is not the same as being alive.</p>
+                    <p class="pain-desc editable" data-field="pain1Desc">You’ve optimized your career, your fitness, and your diet, yet the internal noise remains just as loud. Survival is not the same as being alive.</p>
                 </div>
                 <div class="pain-item">
                     <div style="display: flex; gap: 20px; align-items: center;">
                         <div class="pain-num">2</div>
-                        <h3 class="pain-title editable" data-field="pain2Title">The Search for "Better"</h3>
+                        <h3 class="pain-title editable" data-field="pain2Title">The Hollow "Better"</h3>
                     </div>
                     <p class="pain-desc editable" data-field="pain2Desc">Chasing a better feeling is a treadmill. We stop looking for the exit and start learning how to sit exactly where we are, without judgment.</p>
                 </div>
@@ -547,7 +564,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 style="font-size: 3rem; italic: true;" class="editable" data-field="offeringsTitle">The Ways of Working</h2>
-                <span class="label editable" data-field="offeringsLabel">Services / Q3 2024</span>
+                <span class="label editable" data-field="offeringsLabel">Services</span>
             </div>
             <div class="offer-grid">
                 <div class="offer-card">
@@ -573,7 +590,7 @@
                         <span class="offer-type editable" data-field="offer3Type">Immersive</span>
                         <h3 class="offer-name editable" data-field="offer3Name">Off-Grid</h3>
                         <p class="offer-price editable" data-field="offer3Price">Annual Executive Retreat</p>
-                        <p class="offer-desc editable" data-field="offer3Desc">A 4-day intensive designed for leadership through the lens of clarity.</p>
+                        <p class="offer-desc editable" data-field="offer3Desc">A 4-day intensive designed for self leadership through the lens of clarity.</p>
                     </div>
                     <a href="#" style="color: var(--parchment); font-family: var(--font-mono); font-size: 11px; text-decoration: none; border-bottom: 1px solid;">WAITLIST</a>
                 </div>
@@ -638,47 +655,58 @@
     <script>
         const heroSection = document.querySelector('section.hero');
         const orbContainer = document.querySelector('.breathing-orb-container');
+        let lastX = 0;
+        let lastY = 0;
+        let isInHeroSection = false;
 
         if (heroSection && orbContainer) {
-            // Set initial position (100px from left, centered vertically)
-            orbContainer.style.left = '100px';
-            orbContainer.style.top = '50%';
-            orbContainer.style.transform = 'translate(-50%, -50%)';
+            // Initialize position
+            const heroRect = heroSection.getBoundingClientRect();
+            lastX = window.innerWidth / 2;
+            lastY = heroRect.top + heroRect.height / 2;
+            orbContainer.style.left = lastX + 'px';
+            orbContainer.style.top = lastY + 'px';
 
-            heroSection.addEventListener('mousemove', (e) => {
+            document.addEventListener('mousemove', (e) => {
                 const heroRect = heroSection.getBoundingClientRect();
                 
-                // Mouse position relative to hero section
-                const mouseX = e.clientX - heroRect.left;
-                const mouseY = e.clientY - heroRect.top;
+                // Check if mouse is within hero section (including top which is negative when page scrolls)
+                const heroTop = heroRect.top;
+                const heroBottom = heroRect.bottom;
+                const heroLeft = heroRect.left;
+                const heroRight = heroRect.right;
                 
-                // Center of hero section
-                const centerX = heroRect.width / 2;
-                const centerY = heroRect.height / 2;
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
                 
-                // Distance from center
-                const distX = mouseX - centerX;
-                const distY = mouseY - centerY;
+                // Check if mouse is in hero section bounds
+                isInHeroSection = mouseX >= heroLeft && mouseX <= heroRight && 
+                                 mouseY >= heroTop && mouseY <= heroBottom;
                 
-                // Apply 40% tracking for wider range of movement across hero section
-                const orbX = centerX + (distX * 0.40);
-                const orbY = centerY + (distY * 0.40);
-                
-                orbContainer.style.left = orbX + 'px';
-                orbContainer.style.top = orbY + 'px';
-                orbContainer.style.transform = 'translate(-50%, -50%)';
-                
-                // Store last position
-                orbContainer.dataset.lastX = orbX;
-                orbContainer.dataset.lastY = orbY;
+                if (isInHeroSection) {
+                    // Center of viewport
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    
+                    // Distance from center
+                    const distX = mouseX - centerX;
+                    const distY = mouseY - centerY;
+                    
+                    // Apply 20% tracking for slower, meditative movement
+                    const offsetX = centerX + (distX * 0.20);
+                    const offsetY = centerY + (distY * 0.20);
+                    
+                    // Constrain movement to hero section bounds
+                    const constrainedX = Math.max(heroLeft + 200, Math.min(heroRight - 200, offsetX));
+                    const constrainedY = Math.max(heroTop + 200, Math.min(heroBottom - 200, offsetY));
+                    
+                    lastX = constrainedX;
+                    lastY = constrainedY;
+                    
+                    orbContainer.style.left = constrainedX + 'px';
+                    orbContainer.style.top = constrainedY + 'px';
+                }
             });
-
-            // Remove mouseleave event - orb will stay at last position
-            // heroSection.addEventListener('mouseleave', () => {
-            //     orbContainer.style.left = '100px';
-            //     orbContainer.style.top = '50%';
-            //     orbContainer.style.transform = 'translateY(-50%)';
-            // });
         }
     </script>
 

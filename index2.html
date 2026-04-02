@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awakin with Kez — Practice & Presence</title>
+    <title>Keziah — Practice & Presence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -101,27 +101,17 @@
             justify-content: center;
             padding-top: 100px;
             position: relative;
-            overflow: visible;
-            pointer-events: auto;
+            overflow: hidden;
         }
 
         .breathing-orb-container {
-            position: fixed;
+            position: absolute;
             width: 400px;
             height: 400px;
             z-index: 0;
             opacity: 0.7;
             pointer-events: none;
             transition: none;
-            left: 50%;
-            top: 50vh;
-            transform: translate(-50%, -50%);
-            background: transparent;
-            border: none;
-            padding: 0;
-            margin: 0;
-            overflow: visible;
-            display: block;
         }
 
         .breathing-orb-container:hover {
@@ -133,19 +123,11 @@
             height: 100%;
             filter: blur(50px);
             overflow: visible;
-            display: block;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            border: none;
-            fill: none;
-            stroke: none;
         }
 
         .orb-circle {
             animation: breathe 6s ease-in-out infinite;
             transform-origin: 300px 300px;
-            stroke: none;
         }
 
         @keyframes breathe {
@@ -382,7 +364,6 @@
             position: relative;
             padding-top: 130%;
             overflow: hidden;
-            margin-top: 60px;
         }
 
         .about-image-wrapper img {
@@ -494,7 +475,7 @@
     <button class="edit-mode-toggle" id="editToggle" title="Click to enable editing mode">Edit Mode</button> -->
 
     <nav>
-        <div class="nav-logo editable" data-field="navLogo">Awakin with Kez.</div>
+        <div class="nav-logo editable" data-field="navLogo">Keziah.</div>
         <div class="nav-meta">
             <div class="meta-block">
                 <span class="label">Location</span>
@@ -513,7 +494,7 @@
         
         <!-- Breathing Orb -->
         <div class="breathing-orb-container">
-            <svg class="breathing-orb" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="400" height="400" preserveAspectRatio="xMidYMid meet" style="background: transparent; border: none; fill: transparent; stroke: none;">
+            <svg class="breathing-orb" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                 <circle class="orb-circle orb-circle-1" cx="200" cy="200" r="120"></circle>
                 <circle class="orb-circle orb-circle-2" cx="200" cy="200" r="120"></circle>
                 <circle class="orb-circle orb-circle-3" cx="200" cy="200" r="120"></circle>
@@ -528,7 +509,7 @@
             </div>
             <div style="text-align: right;">
                 <span class="label" style="display: block; margin-bottom: 8px;">Since</span>
-                <span style="font-family: var(--font-serif); font-size: 24px; font-style: italic;" class="editable" data-field="yearSince">MMXXII</span>
+                <span style="font-family: var(--font-serif); font-size: 24px; font-style: italic;" class="editable" data-field="yearSince">MMXXIV</span>
             </div>
         </div>
     </section>
@@ -537,24 +518,18 @@
         <div class="container">
             <div class="pain-grid">
                 <div class="pain-item">
-                    <div style="display: flex; gap: 20px; align-items: center;">
-                        <div class="pain-num">1</div>
-                        <h3 class="pain-title editable" data-field="pain1Title">The Exhaustion of Performance</h3>
-                    </div>
-                    <p class="pain-desc editable" data-field="pain1Desc">You’ve optimized your career, your fitness, and your diet, yet the internal noise remains just as loud. Survival is not the same as being alive.</p>
+                    <div class="pain-num">1</div>
+                    <h3 class="pain-title editable" data-field="pain1Title">The Exhaustion of Performance</h3>
+                    <p class="pain-desc editable" data-field="pain1Desc">You have optimized every hour of your day, yet the internal landscape remains cluttered and demanding. Survival is not the same as being alive.</p>
                 </div>
                 <div class="pain-item">
-                    <div style="display: flex; gap: 20px; align-items: center;">
-                        <div class="pain-num">2</div>
-                        <h3 class="pain-title editable" data-field="pain2Title">The Hollow "Better"</h3>
-                    </div>
+                    <div class="pain-num">2</div>
+                    <h3 class="pain-title editable" data-field="pain2Title">The Search for "Better"</h3>
                     <p class="pain-desc editable" data-field="pain2Desc">Chasing a better feeling is a treadmill. We stop looking for the exit and start learning how to sit exactly where we are, without judgment.</p>
                 </div>
                 <div class="pain-item">
-                    <div style="display: flex; gap: 20px; align-items: center;">
-                        <div class="pain-num">3</div>
-                        <h3 class="pain-title editable" data-field="pain3Title">The Distance from Self</h3>
-                    </div>
+                    <div class="pain-num">3</div>
+                    <h3 class="pain-title editable" data-field="pain3Title">The Distance from Self</h3>
                     <p class="pain-desc editable" data-field="pain3Desc">You work hard, you travel well, but the connection to your own instinct has frayed. We practice to shorten that distance.</p>
                 </div>
             </div>
@@ -565,7 +540,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 style="font-size: 3rem; italic: true;" class="editable" data-field="offeringsTitle">The Ways of Working</h2>
-                <span class="label editable" data-field="offeringsLabel">Services</span>
+                <span class="label editable" data-field="offeringsLabel">Services / Q3 2024</span>
             </div>
             <div class="offer-grid">
                 <div class="offer-card">
@@ -591,7 +566,7 @@
                         <span class="offer-type editable" data-field="offer3Type">Immersive</span>
                         <h3 class="offer-name editable" data-field="offer3Name">Off-Grid</h3>
                         <p class="offer-price editable" data-field="offer3Price">Annual Executive Retreat</p>
-                        <p class="offer-desc editable" data-field="offer3Desc">A 4-day intensive designed for self leadership through the lens of clarity.</p>
+                        <p class="offer-desc editable" data-field="offer3Desc">A 4-day intensive designed for leadership through the lens of clarity.</p>
                     </div>
                     <a href="#" style="color: var(--parchment); font-family: var(--font-mono); font-size: 11px; text-decoration: none; border-bottom: 1px solid;">WAITLIST</a>
                 </div>
@@ -617,7 +592,7 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-image-wrapper">
-                    <img src="./keziah_profile.png" alt="Keziah">
+                    <img src="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Keziah">
                 </div>
                 <div class="about-text">
                     <div>
@@ -658,31 +633,45 @@
         const orbContainer = document.querySelector('.breathing-orb-container');
 
         if (heroSection && orbContainer) {
+            // Set initial position (100px from left, centered vertically)
+            orbContainer.style.left = '100px';
+            orbContainer.style.top = '50%';
+            orbContainer.style.transform = 'translate(-50%, -50%)';
+
             heroSection.addEventListener('mousemove', (e) => {
                 const heroRect = heroSection.getBoundingClientRect();
                 
-                // Only track if mouse is in hero section
-                if (e.clientY < heroRect.bottom) {
-                    // Mouse position relative to viewport
-                    const mouseX = e.clientX;
-                    const mouseY = e.clientY;
-                    
-                    // Center of viewport
-                    const centerX = window.innerWidth / 2;
-                    const centerY = heroRect.bottom / 2;
-                    
-                    // Distance from center
-                    const distX = mouseX - centerX;
-                    const distY = mouseY - centerY;
-                    
-                    // Apply 30% tracking for subtle movement
-                    const offsetX = centerX + (distX * 0.30);
-                    const offsetY = centerY + (distY * 0.30);
-                    
-                    orbContainer.style.left = offsetX + 'px';
-                    orbContainer.style.top = offsetY + 'px';
-                }
+                // Mouse position relative to hero section
+                const mouseX = e.clientX - heroRect.left;
+                const mouseY = e.clientY - heroRect.top;
+                
+                // Center of hero section
+                const centerX = heroRect.width / 2;
+                const centerY = heroRect.height / 2;
+                
+                // Distance from center
+                const distX = mouseX - centerX;
+                const distY = mouseY - centerY;
+                
+                // Apply 40% tracking for wider range of movement across hero section
+                const orbX = centerX + (distX * 0.40);
+                const orbY = centerY + (distY * 0.40);
+                
+                orbContainer.style.left = orbX + 'px';
+                orbContainer.style.top = orbY + 'px';
+                orbContainer.style.transform = 'translate(-50%, -50%)';
+                
+                // Store last position
+                orbContainer.dataset.lastX = orbX;
+                orbContainer.dataset.lastY = orbY;
             });
+
+            // Remove mouseleave event - orb will stay at last position
+            // heroSection.addEventListener('mouseleave', () => {
+            //     orbContainer.style.left = '100px';
+            //     orbContainer.style.top = '50%';
+            //     orbContainer.style.transform = 'translateY(-50%)';
+            // });
         }
     </script>
 

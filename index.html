@@ -138,7 +138,6 @@
             padding: 0;
             background: transparent;
             border: none;
-            fill: none;
             stroke: none;
         }
 
@@ -656,31 +655,56 @@
     <script>
         const heroSection = document.querySelector('section.hero');
         const orbContainer = document.querySelector('.breathing-orb-container');
+        let lastX = 0;
+        let lastY = 0;
+        let isInHeroSection = false;
 
         if (heroSection && orbContainer) {
-            heroSection.addEventListener('mousemove', (e) => {
+            // Initialize position
+            const heroRect = heroSection.getBoundingClientRect();
+            lastX = window.innerWidth / 2;
+            lastY = heroRect.top + heroRect.height / 2;
+            orbContainer.style.left = lastX + 'px';
+            orbContainer.style.top = lastY + 'px';
+
+            document.addEventListener('mousemove', (e) => {
                 const heroRect = heroSection.getBoundingClientRect();
                 
-                // Only track if mouse is in hero section
-                if (e.clientY < heroRect.bottom) {
-                    // Mouse position relative to viewport
-                    const mouseX = e.clientX;
-                    const mouseY = e.clientY;
-                    
+                // Check if mouse is within hero section (including top which is negative when page scrolls)
+                const heroTop = heroRect.top;
+                const heroBottom = heroRect.bottom;
+                const heroLeft = heroRect.left;
+                const heroRight = heroRect.right;
+                
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // Check if mouse is in hero section bounds
+                isInHeroSection = mouseX >= heroLeft && mouseX <= heroRight && 
+                                 mouseY >= heroTop && mouseY <= heroBottom;
+                
+                if (isInHeroSection) {
                     // Center of viewport
                     const centerX = window.innerWidth / 2;
-                    const centerY = heroRect.bottom / 2;
+                    const centerY = window.innerHeight / 2;
                     
                     // Distance from center
                     const distX = mouseX - centerX;
                     const distY = mouseY - centerY;
                     
-                    // Apply 30% tracking for subtle movement
-                    const offsetX = centerX + (distX * 0.30);
-                    const offsetY = centerY + (distY * 0.30);
+                    // Apply 20% tracking for slower, meditative movement
+                    const offsetX = centerX + (distX * 0.20);
+                    const offsetY = centerY + (distY * 0.20);
                     
-                    orbContainer.style.left = offsetX + 'px';
-                    orbContainer.style.top = offsetY + 'px';
+                    // Constrain movement to hero section bounds
+                    const constrainedX = Math.max(heroLeft + 200, Math.min(heroRight - 200, offsetX));
+                    const constrainedY = Math.max(heroTop + 200, Math.min(heroBottom - 200, offsetY));
+                    
+                    lastX = constrainedX;
+                    lastY = constrainedY;
+                    
+                    orbContainer.style.left = constrainedX + 'px';
+                    orbContainer.style.top = constrainedY + 'px';
                 }
             });
         }
